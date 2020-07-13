@@ -2,19 +2,24 @@ body{
     background-color: rgb(245, 240, 240);
 }
 
-form{
+.postFormAdmin{
+   width:50%;
+}
+#navForm{
    width:50%;
 }
 #card-style{
     width: 13rem;
     display: inline-block;
     border-radius:10px;
+    border: 1px solid grey;
 }
 .input-group-text1 ion-icon{
     color: white;
    margin-top: 10;
    margin-left: 10;
 }
+
 ion-icon{
     cursor: pointer;
 }
@@ -37,6 +42,11 @@ a{
 }
 a:hover{
     color: black;
+    
+}
+#a:hover{
+    text-decoration: none;
+    font-weight: bold;
 }
 a:hover .card-img-top{
     background-color: rgba(0,0,0,0.5);
@@ -46,8 +56,7 @@ h3{
 }
 .w3-display-container{
     margin:2%;
-    border-right: 1px solid grey;
-    border-left: 1px solid grey;
+   
     border-radius:10px;
 }
 .card-title{
@@ -91,6 +100,58 @@ h3{
 #left-button-spices,#right-button-spices,#left-button,#right-button{
     display: block;
 }
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: #292b2c;
+  color: white;
+}
+.postFormAdmin{
+    width: 60%;
+    margin-left: 20%;
+    padding: 20;
+}
+.required-symbol{
+    color: red;
+}
+#loaderBg{
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 150%;
+    z-index: 1;
+    position: absolute;
+    position: fixed;
+    display: none;
+}
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    margin-top: 20%;
+    margin-left: 50%;
+    position: absolute;
+    z-index: 1;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  #nextBtnInst{
+      margin-top: 10px;
+      width: 100%;
+      height: 10%;
+  }
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 @media screen and (max-width: 767px) {   
     #secondary{
         display: none;

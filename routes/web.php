@@ -13,3 +13,17 @@
 
 Route::get('/','HomeController@index');
 Route::get('/redirect','HomeController@redirect');
+Route::get('/Seafood','HomeController@SeafoodPage');
+Route::post('/Seafood','HomeController@SeafoodPageLoadMore');
+Route::get('/Species','HomeController@SpeciesPage');
+Route::post('/Species','HomeController@SpeciesPageLoadMore');
+//google auth
+Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+//razorpay Integration
+Route::get('product', 'RazorpayController@razorpayProduct');
+Route::post('paysuccess', 'RazorpayController@razorPaySuccess');
+Route::post('razor-thank-you', 'RazorpayController@RazorThankYou');
+//admin page
+Route::get('/admin/PostProduct','adminController@index');
+Route::post('/admin/PostProduct','adminController@postProduct');
