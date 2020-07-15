@@ -27,3 +27,5 @@ Route::post('razor-thank-you', 'RazorpayController@RazorThankYou');
 //admin page
 Route::get('/admin/PostProduct','adminController@index');
 Route::post('/admin/PostProduct','adminController@postProduct');
+//get single Item
+Route::get('/singleItem/{category}/{prod_id}','singleItemController@index');

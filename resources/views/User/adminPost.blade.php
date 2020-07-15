@@ -2,6 +2,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
+<div class="innerBody">
 <div id="loaderBg">
   <div class="loader"></div>
 </div>
@@ -18,7 +19,6 @@
       <datalist id="categories" >
     <option value="SeaFood">
     <option value="Species">
-   
 </datalist>
 </div>
   </div>
@@ -65,6 +65,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Post Product</button>
 </form>
+</div>
 @include('User.footer')
 </body>
 <script>

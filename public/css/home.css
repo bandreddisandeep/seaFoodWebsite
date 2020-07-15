@@ -8,6 +8,14 @@ body{
 #navForm{
    width:50%;
 }
+#addCartBtn{
+    padding: 5;
+    margin: 5;
+}
+#purchaseBtn{
+    padding: 5;
+    margin: 5;
+}
 #card-style{
     width: 13rem;
     display: inline-block;
@@ -23,8 +31,13 @@ body{
 ion-icon{
     cursor: pointer;
 }
+.strikeAmount{
+    text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
+}
 .prawnsTrending{
-    overflow-x:auto;
+    overflow-y:auto;
     white-space:nowrap;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -70,15 +83,18 @@ h3{
 #block{
     
     background-color: rgb(245, 240, 240);
-    height: 25%;
+    height: 30%;
     border-bottom: 0.5px solid grey;
     border-top: 0.5px solid grey;
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 .totalBlock{
-    margin: 5%;
+    margin: 30px;
 
+}
+#singleItemsDisplay{
+    height: 80%;
 }
 #textDescript{
     overflow: auto;
@@ -141,6 +157,13 @@ footer {
       margin-top: 10px;
       width: 100%;
       height: 10%;
+  }
+  .innerBody{
+      background-color: white;
+      margin: 3%;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 10px 20px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
   }
   /* Safari */
   @-webkit-keyframes spin {

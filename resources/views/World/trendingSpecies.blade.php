@@ -6,7 +6,7 @@ foreach($products as $product){
   if($product->category=="Species"){
     $totalProducts += 1;
 ?>
-<a id="a" href="redirect">
+<a id="a" href=<?php echo "/singleItem/Species/".$product->prod_id ?>>
 <div class="card" id="card-style">
   <img class="card-img-top" height="100" width="100" src='/images/<?php echo $product->product_pic1; ?>' alt="Card image cap">
   <div id="b" class="card-body">
