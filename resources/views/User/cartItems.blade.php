@@ -2,10 +2,8 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
-<div id="loaderBg">
-  <div class="loader"></div>
-</div>
 <div class="innerBody">
+
 <div class="form-row">
 <div id="singleItemsDisplay" class="form-group col-md-6">
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -72,7 +70,8 @@
     </tr>
     <tr>
       <th>
-     
+      <form class="checkOut" onsubmit="return loaderActivate()" name="postProductForm" method="post" enctype="multipart/form-data">
+@csrf
 <div class="form-row">
    <div class="form-group col-md-12">Quantity</div>
     </div>
@@ -92,20 +91,13 @@
     </div>
     <div class="form-row">
 <div class="form-group col-md-6">
-<form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/addToCart">
-@csrf
-<input style="display:block" id="quantity_backend" name="quantity_backend" value="1">
   <button type="submit" class="btn btn-primary">Add to Cart</button>
-  </form>
   </div>
   <div class="form-group col-md-6">
-  <form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/buyNow">
-@csrf
-<input disabled style="display:none" id="quantity_backend2" name="quantity_backend2" value="{{$selectedItem[0]->offer_price}}">
   <button type="submit" class="btn btn-success">Buy Now</button>
-  </form>
   </div>
   </div>
+</form>
 </th>
     </tr>
   </thead>
@@ -154,18 +146,11 @@
 function calcTotalPrice(text){
   if(text>=0 && text<=document.getElementById('availability').value){
     document.getElementById('totalPrice').innerHTML = 'Rs. '+ document.getElementById('savedPrice').value*text;
-    document.getElementById('quantity_backend').value = text;
-    document.getElementById('quantity_backend2').value = text;
   }
   else{
     document.getElementById('totalPrice').innerHTML = 'Rs. '+ document.getElementById('savedPrice').value;
-    document.getElementById('quantity_backend').value = 1;
     document.getElementById('EnteredPrice').value =  1;
   }
-}
-function loaderActivate(){
-    document.getElementById("loaderBg").style.display = "block";
-    return true;
 }
 </script>
 </html>

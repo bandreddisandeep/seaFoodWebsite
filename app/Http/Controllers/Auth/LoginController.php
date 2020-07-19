@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Redirect;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -45,7 +46,22 @@ class LoginController extends Controller
     public function handleGoogleCallback()
     {
         $user = Socialite::driver('google')->stateless()->user();
-        return $user->getName();
-       
+        session(['gmailLoggedIn' => $user->getEmail()]);
+        session(['NameLoggedIn' => $user->getName()]);
+        if (User::where('email', '=',$user->getEmail())->count() == 0) {
+            $newUser = new User;
+            $newUser->email = $user->getEmail();
+            $newUser->name = $user->getName();
+            $newUser->password = "xcvbghjikldfgh";
+            $newUser->login_type = 'Google';
+            $newUser->save();
+        }
+
+        return Redirect::to(session('googleLoginBeforeLink')); // Will redirect 2 links back
+    }
+
+    public function logout(){
+        session()->forget(['gmailLoggedIn', 'NameLoggedIn']);
+        return Redirect::to(session('googleLoginBeforeLink'));
     }
 }

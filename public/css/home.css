@@ -44,13 +44,22 @@ ion-icon{
 .prawnsTrending::-webkit-scrollbar {
     display: none;
 }
-
+.modal-title{
+    font-weight: bold;
+}
+#nmlLoginBtn,.modal-title{
+    width: 40%;
+    margin-left:30% ;
+    margin-top: 10px;
+    text-align: center;
+}
 /* Hide scrollbar for IE, Edge and Firefox */
 .prawnsTrending {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
 a{
+    cursor: pointer;
     color:black;
 }
 a:hover{
@@ -66,6 +75,9 @@ a:hover .card-img-top{
 }
 h3{
     text-align: center;
+}
+.dropdown{
+    margin-left: 10px;
 }
 .w3-display-container{
     margin:2%;
@@ -181,5 +193,14 @@ footer {
     }
     #left-button-spices,#right-button-spices,#left-button,#right-button{
         display: none;
+    }
+    #navForm{
+        width:83%;
+     }
+     .navbar-brand{
+        width:60%;
+     }
+     .dropdown{
+        margin-top: 10px;
     }
 }

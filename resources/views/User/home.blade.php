@@ -50,9 +50,8 @@
     <p id="secondary" class="card-text">{{$product->description}}</p>
   </div>
   <div class="form-group col-md-3">
-  <h5 class="card-title">Rs.{{$product->product_price}}</h5>
+  <h5 class="card-title"><span class="strikeAmount">Rs. {{$product->product_price}}</span> Rs.{{$product->offer_price}}/{{$product->type}}</h5>
     <p class="card-text">{{$product->views}} Views</p>
-    <button class="btn btn-primary">Add to Cart</button>
 </div>
 </div>
 </div>
