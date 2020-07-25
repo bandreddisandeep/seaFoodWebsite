@@ -68,7 +68,6 @@ a:hover{
 }
 #a:hover{
     text-decoration: none;
-    font-weight: bold;
 }
 a:hover .card-img-top{
     background-color: rgba(0,0,0,0.5);
@@ -86,6 +85,11 @@ h3{
 }
 .card-title{
     font-weight: bold;
+}
+.warning{
+    font-weight: bold;
+    color:red;
+    text-align: center;
 }
 .card-text{
     width: 50%;
@@ -142,6 +146,10 @@ footer {
 .required-symbol{
     color: red;
 }
+#removeBtn{
+    width:100%;
+    display:none;
+}
 #loaderBg{
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -195,12 +203,19 @@ footer {
         display: none;
     }
     #navForm{
-        width:83%;
+        width:75%;
      }
      .navbar-brand{
         width:60%;
      }
      .dropdown{
         margin-top: 10px;
+    }
+    #desktopRemBtn{
+        display:none;
+    }
+    #removeBtn{
+        width:100%;
+        display:block;
     }
 }

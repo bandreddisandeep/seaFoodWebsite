@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use App\User;
+use App\CartProducts;
 
 class LoginController extends Controller
 {
@@ -48,6 +49,8 @@ class LoginController extends Controller
         $user = Socialite::driver('google')->stateless()->user();
         session(['gmailLoggedIn' => $user->getEmail()]);
         session(['NameLoggedIn' => $user->getName()]);
+        $notifications = CartProducts::where('email','=',$user->getEmail())->count();
+        session(['noofNotifications' => $notifications]);
         if (User::where('email', '=',$user->getEmail())->count() == 0) {
             $newUser = new User;
             $newUser->email = $user->getEmail();

@@ -35,13 +35,25 @@ class singleItemController extends Controller
                 $newCart->prod_id = $prod_id;
                 $newCart->no_of_items = request('quantity_backend');
                 $newCart->save();
-            }else{
-                $selectedItemCart = CartProducts::where('email', '=',session()->get('gmailLoggedIn'))->where('prod_id', '=',$prod_id)->get();
-                $updateCart = CartProducts::where('prod_id','=',$prod_id)->where('email', '=',session()->get('gmailLoggedIn'))->update(array('no_of_items'=>$selectedItemCart[0]['no_of_items']+request('quantity_backend')));
             }
-
-            
+            // else{
+            //     $selectedItemCart = CartProducts::where('email', '=',session()->get('gmailLoggedIn'))->where('prod_id', '=',$prod_id)->get();
+            //     $updateCart = CartProducts::where('prod_id','=',$prod_id)->where('email', '=',session()->get('gmailLoggedIn'))->update(array('no_of_items'=>$selectedItemCart[0]['no_of_items']+request('quantity_backend')));
+            // }
+            $notifications = CartProducts::where('email','=',session()->get('gmailLoggedIn'))->count();
+            session(['noofNotifications' => $notifications]);
             return Redirect::to(session('googleLoginBeforeLink')); // Will redirect 2 links back
         } 
+    }
+
+    public function deleteItemFromCart($prod_id){
+        products::where('prod_id','=',$prod_id)->delete();
+        CartProducts::where('prod_id','=',$prod_id)->delete();
+        return Redirect::to('/'); // Will redirect 2 links back
+    }
+
+    public function updateItem($prod_id){
+        $selectedItem = products::where('prod_id', '=',$prod_id)->get();
+        return view('User.adminUpdate',compact(['selectedItem']));
     }
 }

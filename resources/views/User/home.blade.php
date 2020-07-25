@@ -41,7 +41,7 @@
 <a id="a" href="/singleItem/{{$product->category}}/{{$product->prod_id}}">
 <div id="block" class="row">
 <div class="col-5">
-  <img class="block-image" height="100%" width="80%" src="/images/{{ $product->product_pic1 }}" alt="Card image cap">
+  <img class="block-image" height="100%" width="80%" src="{{ URL::to('/images/' . $product->product_pic1) }}" alt="Card image cap">
 </div>
 <div id="textDescript" class="col-7">
 <div class="form-row">

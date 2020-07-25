@@ -28,7 +28,15 @@ Route::post('razor-thank-you', 'RazorpayController@RazorThankYou');
 //admin page
 Route::get('/admin/PostProduct','adminController@index');
 Route::post('/admin/PostProduct','adminController@postProduct');
+Route::post('/admin/updateProduct','adminController@updateProduct');
+Route::post('/adminLogin','adminController@adminLogin');
 //get single Item
 Route::get('/singleItem/{category}/{prod_id}','singleItemController@index');
 Route::post('/{prod_id}/addToCart','singleItemController@addToCart');
 Route::post('/{prod_id}/buyNow','singleItemController@buyNow');
+Route::post('/{prod_id}/update','singleItemController@updateItem');
+Route::post('/{prod_id}/delete','singleItemController@deleteItemFromCart');
+//cart Items
+Route::get('/cartItems','adminController@cartItems');
+Route::post('/changeQuantity/cartItems','adminController@updateQty');
+Route::post('/deleteItem/cartItems','adminController@deleteItem');

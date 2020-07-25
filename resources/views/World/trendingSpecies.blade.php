@@ -21,7 +21,7 @@ foreach($products as $product){
 }
 ?>
 </div>
-<?php if($totalProducts>6) {?>
+<?php if($totalProducts>=6) {?>
 <button class="w3-button w3-black w3-display-left" id="left-button-spices">&#10094;</button>
   <button class="w3-button w3-black w3-display-right" id="right-button-spices">&#10095;</button>
 <?php }?>

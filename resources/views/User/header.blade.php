@@ -25,8 +25,17 @@
     <div class="customized">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-      <span class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span>
+      @if(Session::has('NameLoggedIn'))
+@if(Session::get('NameLoggedIn')!="admin")
+      <a href="/cartItems"><span class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span><span class="badge badge-danger">{{ Session::get('noofNotifications')}}</span></a>
       </li>
+      @else
+      <a href="/admin/PostProduct"><span class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="add-circle-sharp"></ion-icon></span></a>
+      </li>
+      @endif
+      @else
+      <span data-toggle="modal" data-target="#exampleModalCenter" class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span>
+      @endif
     </ul>
 </div>
 
@@ -74,16 +83,18 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="/action_page.php">
+      <form method="post" onsubmit="return loaderActivateLogin()" action="/adminLogin">
+      @csrf
+
   <div class="form-group">
     <label for="email">Email address:</label>
-    <input type="email" class="form-control" placeholder="Enter email" id="email">
+    <input type="email" required name="adminEmail" class="form-control" placeholder="Enter email" id="email">
   </div>
   <div class="form-group">
     <label for="pwd">Password:</label>
-    <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+    <input type="password" required name="adminPassw" class="form-control" placeholder="Enter password" id="pwd">
   </div>
-
+  <h5 class="warning">Please use Google Login!</h5>
   <button type="submit" id="nmlLoginBtn" class="btn btn-primary">Login</button>
   <a href="{{ url('auth/google') }}"><button type="button" id="nmlLoginBtn" class="btn btn-primary">Google Login</button></a>
 </form>
@@ -91,3 +102,14 @@
     </div>
   </div>
 </div>
+<script>
+function loaderActivateLogin(){
+  if(document.getElementById('email').value=='admin@mail.com' && document.getElementById('pwd').value=='123'){
+    document.getElementById("loaderBg").style.display = "block";
+    return true;
+  }else{
+    return false;
+  }
+    
+}
+</script>

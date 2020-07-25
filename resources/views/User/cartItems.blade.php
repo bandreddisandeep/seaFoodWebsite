@@ -2,155 +2,113 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
+<div id="loaderBg">
+  <div class="loader"></div>
+</div>
 <div class="innerBody">
 
-<div class="form-row">
-<div id="singleItemsDisplay" class="form-group col-md-6">
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-  @if($selectedItem[0]->product_pic1!='')
-    <div class="carousel-item active">
-      <img height="100%" width="50%" class="d-block w-100" src="/images/{{ $selectedItem[0]->product_pic1 }}" alt="First slide">
-    </div>
-  @endif
-  @if($selectedItem[0]->product_pic2!='')
-    <div class="carousel-item">
-      <img height="100%" width="50%" class="d-block w-100" src="/images/{{ $selectedItem[0]->product_pic2 }}" alt="Second slide">
-    </div>
-  @endif
-  @if($selectedItem[0]->product_pic3!='')
-    <div class="carousel-item">
-      <img height="100%" width="50%" class="d-block w-100" src="/images/{{ $selectedItem[0]->product_pic3 }}" alt="Third slide">
-    </div>
-  @endif
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-</div>
-<div class="form-group col-md-6">
-<div class="content">
-<h3 class="card-title">{{$selectedItem[0]->product_name}}</h3>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Product Type</th>
-      <th scope="col">{{$selectedItem[0]->category}}</th>
-    </tr>
-    <tr>
-      <th>Product Price</th>
-      <th><span class="strikeAmount">Rs. {{$selectedItem[0]->product_price}}</span> Rs. {{$selectedItem[0]->offer_price}}</th>
-    </tr>
-    <tr>
-      <th>Description</th>
-      <th>{{$selectedItem[0]->description}}</th>
-    </tr>
-    <tr>
-      <th>Available</th>
-      <th>{{$selectedItem[0]->total_quantity}}</th>
-    </tr>
-    <tr>
-      <th>Min Order</th>
-      <th>{{$selectedItem[0]->type}}</th>
-    </tr>
-    <tr>
-      <th>Views</th>
-      <th>{{$selectedItem[0]->views}}</th>
-    </tr>
-    <tr>
-      <th>Purchases</th>
-      <th>{{$selectedItem[0]->purchases}}</th>
-    </tr>
-    <tr>
-      <th>
-      <form class="checkOut" onsubmit="return loaderActivate()" name="postProductForm" method="post" enctype="multipart/form-data">
-@csrf
-<div class="form-row">
-   <div class="form-group col-md-12">Quantity</div>
-    </div>
-  <div class="form-row">
-  <div class="form-group col-md-12">
-      <input required value="1" name="EnteredPrice" oninput="calcTotalPrice(this.value)" type="number" class="form-control" id="EnteredPrice" placeholder="Quantity">
-    </div>
-    </div>
-    </th>  
-    <th>
-    <div class="form-row">
-    <input disabled style="display:none" id="availability" value="{{$selectedItem[0]->total_quantity}}" >
-    <input disabled style="display:none" id="savedPrice" value="{{$selectedItem[0]->offer_price}}"  type="number">
-<div id="totalPrice" class="form-group col-md-12">
-    Rs.{{$selectedItem[0]->offer_price}}
-    </div>
-    </div>
-    <div class="form-row">
-<div class="form-group col-md-6">
-  <button type="submit" class="btn btn-primary">Add to Cart</button>
-  </div>
-  <div class="form-group col-md-6">
-  <button type="submit" class="btn btn-success">Buy Now</button>
-  </div>
-  </div>
-</form>
-</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-
-<h3>{{$category}} Trending</h3>
-@if($category=='SeaFood')
-  @include('World.trendingSeafood',['products' => $ItemCategoryTrending])
-@else
-  @include('World.trendingSpecies',['products' => $ItemCategoryTrending])
-@endif
-
 <div class="totalBlock">
-@foreach($products as $product)
-<a id="a" href="/singleItem/{{$product->category}}/{{$product->prod_id}}">
+@foreach($cartItems as $cartItem)
 <div id="block" class="row">
 <div class="col-5">
-  <img class="block-image" height="100%" width="80%" src="/images/{{ $product->product_pic1 }}" alt="Card image cap">
+  <img class="block-image" height="100%" width="80%" src="{{ URL::to('/images/' . $cartItem->product_pic1) }}" alt="Card image cap">
 </div>
 <div id="textDescript" class="col-7">
 <div class="form-row">
   <div class="form-group col-md-9">
-    <h5 class="card-title">{{$product->product_name}}</h5>
-    <p id="secondary" class="card-text">{{$product->description}}</p>
+    <h5 class="card-title"><a href="/singleItem/{{$cartItem->category}}/{{$cartItem->prod_id}}">{{$cartItem->product_name}}</a></h5>
+    <p id="secondary" class="card-text">{{$cartItem->description}}</p>
+    <button type="button" onclick="storeSelectedData({{$cartItem->prod_id}},{{$cartItem->no_of_items}},{{$cartItem->total_quantity}})" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalCenter2">
+    Qty : {{$cartItem->no_of_items}} {{$cartItem->type}}
+  </button>
+  <form style="display:inline" onsubmit="return loaderActivate()" method="post" action="/deleteItem/cartItems">
+      @csrf
+      <input style="display:none" name="selectedIdForDel" value="{{$cartItem->prod_id}}">
+      <button id="desktopRemBtn" type="submit" class="btn btn-danger btn-sm">Remove</button>
+</form>
   </div>
   <div class="form-group col-md-3">
-  <h5 class="card-title"><span class="strikeAmount">Rs. {{$product->product_price}}</span> Rs.{{$product->offer_price}}/{{$product->type}}</h5>
-    <p class="card-text">{{$product->views}} Views</p>
+  <h5 class="card-title"><span class="strikeAmount">Rs. {{$cartItem->product_price*$cartItem->no_of_items}}</span> Rs.{{$cartItem->offer_price*$cartItem->no_of_items}}</h5>
+    <p class="card-text">{{$cartItem->views}} Views</p>
 </div>
 </div>
 </div>
 </div>
-</a>
+<form onsubmit="return loaderActivate()" method="post" action="/deleteItem/cartItems">
+      @csrf
+      <input style="display:none" name="selectedIdForDel" value="{{$cartItem->prod_id}}">
+<button id="removeBtn" type="submit" class="btn btn-danger">Remove</button>
+</form>
 @endforeach
+<div class="form-row">
+@if(Session::get('noofNotifications')!=0)
+  <div class="form-group col-md-10">
+  </div>
+  <div class="form-group col-md-2">
+  <div style="float:right;margin-right:20%">
+<h5 class="card-title">Total : Rs.{{$totalPrice[0]->totalPrice}}</h5>
+<button class="btn btn-primary">Check Out</button>
+  </div>
+  </div>
+  @else
+  <div class="form-group col">
+  <div style="text-align:center">
+<h5 class="card-title">Cart is Empty!!!</h5>
+  </div>
+  </div>
+@endif
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Change Quantity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form onsubmit="return loaderActivate()" method="post" action="/changeQuantity/cartItems">
+      @csrf
+      <div class="modal-body">
+      <input style="display:none" id="selectedId" name="selectedId">
+      
+      <div class="form-group">
+    <label for="exampleInputEmail1">Enter Quantity less than </label><input style="border:none" readonly id="selectedMaxQty">
+    <input type="number" step="0.01" required class="form-control" id="selectedQuantity" name="selectedQuantity" aria-describedby="emailHelp" placeholder="Enter Quantity">
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update Quantity</button>
+      </div>
+      </form>
+    </div>
+  </div>
 </div>
 </div>
+</div>
+
+<h3>Sea Food Supply</h3>
+   @include('World.trendingSeafood',['products' => $seafood])
+<h3>Spices</h3>
+   @include('World.trendingSpecies',['products' => $species])
+  
 @include('User.footer')
 </body>
 <script>
-function calcTotalPrice(text){
-  if(text>=0 && text<=document.getElementById('availability').value){
-    document.getElementById('totalPrice').innerHTML = 'Rs. '+ document.getElementById('savedPrice').value*text;
+function storeSelectedData(id,qty,totQty){
+  document.getElementById('selectedId').value=id;
+  document.getElementById('selectedQuantity').value=qty;
+  document.getElementById('selectedMaxQty').value=totQty;
+}
+function loaderActivate(){
+  if(parseInt(document.getElementById('selectedMaxQty').value)<parseInt(document.getElementById('selectedQuantity').value)){
+    return false;
   }
-  else{
-    document.getElementById('totalPrice').innerHTML = 'Rs. '+ document.getElementById('savedPrice').value;
-    document.getElementById('EnteredPrice').value =  1;
-  }
+    document.getElementById("loaderBg").style.display = "block";
+    return true;
 }
 </script>
 </html>
+

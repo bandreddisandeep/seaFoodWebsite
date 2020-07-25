@@ -56,55 +56,83 @@
     </tr>
     <tr>
       <th>Available</th>
-      <th>{{$selectedItem[0]->total_quantity}}</th>
-    </tr>
-    <tr>
-      <th>Min Order</th>
-      <th>{{$selectedItem[0]->type}}</th>
+      <th>{{$selectedItem[0]->total_quantity}} {{$selectedItem[0]->type}}</th>
     </tr>
     <tr>
       <th>Views</th>
       <th>{{$selectedItem[0]->views}}</th>
     </tr>
-    <tr>
-      <th>Purchases</th>
-      <th>{{$selectedItem[0]->purchases}}</th>
-    </tr>
+    @if(Session::has('NameLoggedIn'))
+@if(Session::get('NameLoggedIn')!="admin")
     <tr>
       <th>
-     
-<div class="form-row">
+<div class="row">
    <div class="form-group col-md-12">Quantity</div>
     </div>
-  <div class="form-row">
-  <div class="form-group col-md-12">
+    </div>
+    </th>
+    <th>
+  <div style="width:50%;margin-left:25%">
       <input required value="1" name="EnteredPrice" oninput="calcTotalPrice(this.value)" type="number" class="form-control" id="EnteredPrice" placeholder="Quantity">
     </div>
-    </div>
     </th>  
+    </tr>
+@endif
+@endif
+    <tr>
     <th>
-    <div class="form-row">
-    <input disabled style="display:none" id="availability" value="{{$selectedItem[0]->total_quantity}}" >
-    <input disabled style="display:none" id="savedPrice" value="{{$selectedItem[0]->offer_price}}"  type="number">
-<div id="totalPrice" class="form-group col-md-12">
+    Total
+    </th>
+    <th>
+    <div id="totalPrice">
     Rs.{{$selectedItem[0]->offer_price}}
     </div>
-    </div>
-    <div class="form-row">
-<div class="form-group col-md-6">
+    </th>
+    </tr>
+    <tr>
+    <th>
+    <input disabled style="display:none" id="availability" value="{{$selectedItem[0]->total_quantity}}" >
+    <input disabled style="display:none" id="savedPrice" value="{{$selectedItem[0]->offer_price}}"  type="number">
+
+<div class="form-group col-md-12">
+
+@if(Session::has('NameLoggedIn'))
+@if(Session::get('NameLoggedIn')=="admin")
+<form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/delete">
+@csrf
+<button type="submit" class="btn btn-danger">Delete</button>
+</form>
+@else
 <form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/addToCart">
 @csrf
-<input style="display:block" id="quantity_backend" name="quantity_backend" value="1">
+<input style="display:none" id="quantity_backend" name="quantity_backend" value="1">
   <button type="submit" class="btn btn-primary">Add to Cart</button>
   </form>
+  @endif
+  @else
+  <button data-toggle="modal" data-target="#exampleModalCenter" type="button" class="btn btn-primary">Add to Cart</button>
+      @endif
   </div>
-  <div class="form-group col-md-6">
+    </th>
+    <th>
+    
+  <div class="form-group col-md-12">
+@if(Session::has('NameLoggedIn'))
+@if(Session::get('NameLoggedIn')=="admin")
+<form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/update">
+@csrf
+<button type="submit" class="btn btn-success">Update</button>
+</form>
+  @else
   <form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/buyNow">
 @csrf
 <input disabled style="display:none" id="quantity_backend2" name="quantity_backend2" value="{{$selectedItem[0]->offer_price}}">
-  <button type="submit" class="btn btn-success">Buy Now</button>
-  </form>
-  </div>
+<button type="submit" class="btn btn-success">Buy Now</button>
+</form>
+  @endif
+  @else
+  <button data-toggle="modal" data-target="#exampleModalCenter" type="button" class="btn btn-success">Buy Now</button>
+      @endif
   </div>
 </th>
     </tr>
@@ -152,7 +180,7 @@
 </body>
 <script>
 function calcTotalPrice(text){
-  if(text>=0 && text<=document.getElementById('availability').value){
+  if(text<=parseInt(document.getElementById('availability').value)){
     document.getElementById('totalPrice').innerHTML = 'Rs. '+ document.getElementById('savedPrice').value*text;
     document.getElementById('quantity_backend').value = text;
     document.getElementById('quantity_backend2').value = text;
@@ -164,6 +192,9 @@ function calcTotalPrice(text){
   }
 }
 function loaderActivate(){
+  if(parseInt(document.getElementById("EnteredPrice").value)<0 || document.getElementById("EnteredPrice").value==""){
+    return false;
+  }
     document.getElementById("loaderBg").style.display = "block";
     return true;
 }
