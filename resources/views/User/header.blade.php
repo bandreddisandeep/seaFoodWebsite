@@ -5,6 +5,17 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="/">Amaxon</a>
+  <div class="customizedInner">
+  @if(Session::has('NameLoggedIn'))
+@if(Session::get('NameLoggedIn')!="admin")
+      <a href="/cartItems"><span class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span><span class="badge badge-danger">{{ Session::get('noofNotifications')}}</span></a>
+      @else
+      <a href="/admin/PostProduct"><span class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="add-circle-sharp"></ion-icon></span></a>
+      @endif
+      @else
+      <span data-toggle="modal" data-target="#exampleModalCenter" class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span>
+      @endif
+</div>
   <form id="navForm" class="form my-2 my-lg-0">
     <div class="input-group">
 
@@ -61,11 +72,14 @@
   {{ Session::get('NameLoggedIn')}}
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="/Seafood">Orders</a>
+    <a class="dropdown-item" href="/orders">Orders</a>
     <a class="dropdown-item" href="{{ url('auth/google/logout') }}">Logout!</a>
   </div>  
+  </div>  
   @else
-  <a class="nav-link " data-toggle="modal" data-target="#exampleModalCenter">Login!</a>
+  <div class="dropdown">
+  <button class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Login!</button>
+  </div>  
 @endif
       </li>
     </ul>

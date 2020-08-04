@@ -10,9 +10,7 @@ foreach($products as $product){
 <div class="card" id="card-style">
   <img class="card-img-top" height="100" width="100" src='/images/<?php echo $product->product_pic1; ?>' alt="Card image cap">
   <div id="b" class="card-body">
-    <h5 class="card-title"><?php echo $product->product_name; ?></h5>
-    <!-- <h5 class="card-title">Card title</h5> -->
-    <h5 class="card-title">Rs.<?php echo $product->product_price; ?></h5>
+    <p class="card-title"><?php echo $product->product_name; ?><br>Rs.<?php echo $product->offer_price; ?></p>
   </div>
 </div>
 </a>

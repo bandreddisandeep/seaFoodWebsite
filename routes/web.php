@@ -40,3 +40,6 @@ Route::post('/{prod_id}/delete','singleItemController@deleteItemFromCart');
 Route::get('/cartItems','adminController@cartItems');
 Route::post('/changeQuantity/cartItems','adminController@updateQty');
 Route::post('/deleteItem/cartItems','adminController@deleteItem');
+//check out
+Route::post('/checkout','ordersController@checkoutList');
+Route::get('/orders','ordersController@index');

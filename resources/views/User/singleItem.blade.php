@@ -102,16 +102,8 @@
 @csrf
 <button type="submit" class="btn btn-danger">Delete</button>
 </form>
-@else
-<form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/addToCart">
-@csrf
-<input style="display:none" id="quantity_backend" name="quantity_backend" value="1">
-  <button type="submit" class="btn btn-primary">Add to Cart</button>
-  </form>
-  @endif
-  @else
-  <button data-toggle="modal" data-target="#exampleModalCenter" type="button" class="btn btn-primary">Add to Cart</button>
       @endif
+  @endif
   </div>
     </th>
     <th>
@@ -123,15 +115,15 @@
 @csrf
 <button type="submit" class="btn btn-success">Update</button>
 </form>
-  @else
-  <form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/buyNow">
+@else
+<form class="checkOut" onsubmit="return loaderActivate()" method="post" action="/{{$selectedItem[0]->prod_id}}/addToCart">
 @csrf
-<input disabled style="display:none" id="quantity_backend2" name="quantity_backend2" value="{{$selectedItem[0]->offer_price}}">
-<button type="submit" class="btn btn-success">Buy Now</button>
-</form>
+<input style="display:none" id="quantity_backend" name="quantity_backend" value="1">
+  <button type="submit" class="btn btn-primary">Add to Cart</button>
+  </form>
   @endif
   @else
-  <button data-toggle="modal" data-target="#exampleModalCenter" type="button" class="btn btn-success">Buy Now</button>
+  <button data-toggle="modal" data-target="#exampleModalCenter" type="button" class="btn btn-primary">Add to Cart</button>
       @endif
   </div>
 </th>
@@ -167,11 +159,12 @@
   </div>
   <div class="form-group col-md-3">
   <h5 class="card-title"><span class="strikeAmount">Rs. {{$product->product_price}}</span> Rs.{{$product->offer_price}}/{{$product->type}}</h5>
-    <p class="card-text">{{$product->views}} Views</p>
+  <p id="secondary" class="card-text">{{$product->views}} Views</p>
 </div>
 </div>
 </div>
 </div>
+<div class="blockFooter"><span class="footerTxt1">views: {{$product->views}}</span><span class="footerTxt2">purchases: {{$product->purchases}}</span></div>
 </a>
 @endforeach
 </div>

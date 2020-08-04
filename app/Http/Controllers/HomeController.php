@@ -5,6 +5,7 @@ use App\web;
 use App\products;
 use Illuminate\Http\Request;
 
+
 class HomeController extends Controller
 {
      /**

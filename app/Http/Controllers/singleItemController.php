@@ -6,6 +6,8 @@ use Redirect;
 use Illuminate\Http\Request;
 use App\web;
 use App\CartProducts;
+use App\bills;
+use App\orders;
 use App\products;
 
 class singleItemController extends Controller

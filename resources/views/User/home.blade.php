@@ -51,11 +51,12 @@
   </div>
   <div class="form-group col-md-3">
   <h5 class="card-title"><span class="strikeAmount">Rs. {{$product->product_price}}</span> Rs.{{$product->offer_price}}/{{$product->type}}</h5>
-    <p class="card-text">{{$product->views}} Views</p>
+    <p id="secondary" class="card-text">{{$product->views}} Views</p>
 </div>
 </div>
 </div>
 </div>
+<div class="blockFooter"><span class="footerTxt1">views: {{$product->views}}</span><span class="footerTxt2">purchases: {{$product->purchases}}</span></div>
 </a>
 @endforeach
 </div>
