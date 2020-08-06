@@ -17,6 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('payment_id');
             $table->string('user_id');
+            $table->string('bill_id');
             $table->string('amount');
             $table->timestamps();
         });

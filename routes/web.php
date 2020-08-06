@@ -17,6 +17,7 @@ Route::get('/Seafood','HomeController@SeafoodPage');
 Route::post('/Seafood','HomeController@SeafoodPageLoadMore');
 Route::get('/Species','HomeController@SpeciesPage');
 Route::post('/Species','HomeController@SpeciesPageLoadMore');
+Route::post('/searchItem','HomeController@searchItem');
 //google auth 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
@@ -30,6 +31,7 @@ Route::get('/admin/PostProduct','adminController@index');
 Route::post('/admin/PostProduct','adminController@postProduct');
 Route::post('/admin/updateProduct','adminController@updateProduct');
 Route::post('/adminLogin','adminController@adminLogin');
+Route::get('/adminOrders','ordersController@adminOrdersIndex');
 //get single Item
 Route::get('/singleItem/{category}/{prod_id}','singleItemController@index');
 Route::post('/{prod_id}/addToCart','singleItemController@addToCart');
@@ -42,4 +44,5 @@ Route::post('/changeQuantity/cartItems','adminController@updateQty');
 Route::post('/deleteItem/cartItems','adminController@deleteItem');
 //check out
 Route::post('/checkout','ordersController@checkoutList');
+Route::post('/updateStatus','ordersController@updateStatus');
 Route::get('/orders','ordersController@index');

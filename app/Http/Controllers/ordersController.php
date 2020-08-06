@@ -23,11 +23,26 @@ class ordersController extends Controller
         $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
         $bills = bills::where('email_id','=',session()->get('gmailLoggedIn'))->join('orders','bills.Bill_id','=','orders.Bill_id')->join('products','orders.prod_id','=','products.prod_id')->get();
         $individualBills = bills::where('email_id','=',session()->get('gmailLoggedIn'))->get();
-        return view('User.orderItems',compact(['bills','individualBills','species','seafood']));
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.orderItems',compact(['bills','individualBills','species','seafood','productnames']));
     }
+
+    public function adminOrdersIndex(){
+        //storing link
+        $currentLink = request()->path();
+        session(['googleLoginBeforeLink' => $currentLink]);
+
+        $species = products::where('category', '=','Species')->orderBy('prod_id', 'DESC')->take(12)->get();
+        $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
+        $bills = bills::join('orders','bills.Bill_id','=','orders.Bill_id')->join('products','orders.prod_id','=','products.prod_id')->get();
+        $individualBills = bills::get();
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.orderItems',compact(['bills','individualBills','species','seafood','productnames']));
+    }
+
        public function checkoutList(Request $request){
         $cartProducts = CartProducts::where('email', '=',session()->get('gmailLoggedIn'))->get();
-        $BillIDGenerated = 'BRP'.date('YmdHis'.rand(1,100));
+        $BillIDGenerated = request('bill_id_form');
         $newBill = new bills;
         $newBill->email_id = session()->get('gmailLoggedIn');
         $newBill->Bill_id = $BillIDGenerated;
@@ -47,5 +62,9 @@ class ordersController extends Controller
         session(['noofNotifications' => $notifications]);
         Mail::to(session()->get('gmailLoggedIn'))->queue(new OrderPlaced($BillIDGenerated));
         return Redirect::to('/');
+    }
+    public function updateStatus(Request $request){
+        bills::where('Bill_id','=',request('bill_id'))->update(['Bill_status'=>request('status')]);
+        return Redirect::to(session('googleLoginBeforeLink'));
     }
 }

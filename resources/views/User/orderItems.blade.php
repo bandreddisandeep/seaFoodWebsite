@@ -1,4 +1,4 @@
-@include('User.header')
+@include('User.header',['productnames' => $productnames])
 
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,8 @@
 <div class="form-row">
   <div class="form-group col-md-9">
     <h5 class="card-title">Bill No : {{$individualBill->Bill_id}}</h5>
-    <p id="secondary" class="card-text">Ordered On : {{$individualBill->created_at}}</p>
+<?php $date = explode(" ",$individualBill->created_at); ?>
+    <p id="secondary" class="card-text">Ordered On : {{$date[0]}}</p>
     <button class="btn btn-dark btn-sm">View Bill</button>
   </div>
   <div class="form-group col-md-3">
@@ -50,10 +51,51 @@
 </tr>
 @endif
 @endforeach
-<h4 style="color:red">Status : {{$individualBill->Bill_status}}</h4>
+<h4 style="color:red">Status : {{$individualBill->Bill_status}} 
+@if(Session::get('NameLoggedIn')=="admin")
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="updateStatus('{{$individualBill->Bill_id}}','{{$individualBill->Bill_status}}')">Edit Status</button>
+@endif
+</h4>
 </table>
 </div>
-<div class="blockFooter"><span class="footerTxt2">Date: {{$individualBill->created_at}}</span></div>
+<!---Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form onsubmit="return loaderActivate()" method="post" action="/updateStatus">
+      @csrf
+          <div class="form-group">
+            <input type="text" readonly class="form-control" name="bill_id" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Status:</label>
+            <textarea class="form-control" name="status" id="message-text"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update Status</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blockFooter">
+@if(Session::get('NameLoggedIn')=="admin")
+<span class="footerTxt1">From: {{$individualBill->email_id}}</span>
+@else
+<span class="footerTxt1">Status: {{$individualBill->Bill_status}}</span>
+@endif
+<?php $date = explode(" ",$individualBill->created_at); ?>
+<span class="footerTxt2">Date: {{$date[0]}}</span></div>
 @endforeach
 <div class="form-row">
 @if(count($individualBills)==0) 
@@ -81,9 +123,11 @@
 function slideToggleFun(x){
     let idTag = '#'+x;
      $(idTag).slideToggle();
-
 }
-  
+function updateStatus(billId,billStatus){
+  document.getElementById("recipient-name").value = billId;
+  document.getElementById("message-text").value = billStatus;
+}
 </script>
 </html>
 

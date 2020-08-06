@@ -12,7 +12,8 @@ class adminController extends Controller
     public function index()
     {
         //
-        return view('User.adminPost');
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.adminPost',compact(['productnames']));
     }
 
     //post product
@@ -58,6 +59,7 @@ class adminController extends Controller
         $productDetails->category = request('productType');
         $productDetails->views = 0;
         $productDetails->save();
+        
         return redirect('/admin/PostProduct');
     }
 
@@ -67,7 +69,8 @@ class adminController extends Controller
         $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
         $cartItems = CartProducts::where('email','=',$gmail)->join('products','cart_products.prod_id','=','products.prod_id')->get();
         $totalPrice = CartProducts::select(DB::raw('sum(cart_products.no_of_items*products.offer_price) as totalPrice'))->where('email','=',$gmail)->join('products','cart_products.prod_id','=','products.prod_id')->get();
-        return view('User.cartItems',compact(['cartItems','seafood','species','totalPrice']));
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.cartItems',compact(['cartItems','seafood','species','totalPrice','productnames']));
     }
 
     public function updateQty(Request $request){

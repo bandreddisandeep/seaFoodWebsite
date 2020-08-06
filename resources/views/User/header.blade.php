@@ -4,7 +4,7 @@
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="/">Amaxon</a>
+  <a class="navbar-brand" href="/">BRP Foods</a>
   <div class="customizedInner">
   @if(Session::has('NameLoggedIn'))
 @if(Session::get('NameLoggedIn')!="admin")
@@ -16,21 +16,22 @@
       <span data-toggle="modal" data-target="#exampleModalCenter" class="input-group-text1" id="basic-addon2"><ion-icon size="large" name="cart"></ion-icon></span>
       @endif
 </div>
-  <form id="navForm" class="form my-2 my-lg-0">
+  <form onsubmit="return true" method="post" action="/searchItem" id="navForm" class="form my-2 my-lg-0">
+  @csrf
     <div class="input-group">
 
-  <input type="text" class="form-control" list="searchElements" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" name="searchElement" list="searchElements" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
   <datalist id="searchElements" >
-    <option value="Chocolate">
-    <option value="Coconut">
-    <option value="Mint">
-    <option value="Strawberry">
-    <option value="Vanilla">c
+  @foreach($productnames as $productname)
+    <option value="{{$productname->product_name}}">
+  @endforeach
+    
 </datalist>
-
+<button type="submit">
   <div class="input-group-append">
     <span class="input-group-text" id="basic-addon2"><ion-icon size="large" name="search-outline"></ion-icon></span>
   </div>
+  </button>
 </div>
     </form>
     <div class="customized">
@@ -60,7 +61,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="/Seafood">Seafood</a>
-    <a class="dropdown-item" href="/Species">Species</a>
+    <a class="dropdown-item" href="/Species">Spices</a>
   </div>
 </div>     
  </li>
@@ -72,7 +73,11 @@
   {{ Session::get('NameLoggedIn')}}
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+@if(Session::get('NameLoggedIn')!="admin")
     <a class="dropdown-item" href="/orders">Orders</a>
+    @else
+    <a class="dropdown-item" href="/adminOrders">Orders</a>
+    @endif
     <a class="dropdown-item" href="{{ url('auth/google/logout') }}">Logout!</a>
   </div>  
   </div>  

@@ -1,7 +1,10 @@
-@include('User.header')
+@include('User.header',['productnames' => $productnames])
 
 <html>
+<head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
 <body>
 <div id="loaderBg">
   <div class="loader"></div>
@@ -48,11 +51,13 @@
   <div class="form-group col-md-2">
   <div style="float:right;margin-right:20%">
 <h5 class="card-title">Total : Rs.{{number_format($totalPrice[0]->totalPrice, 2, '.', '')}}</h5>
+<?php $billId = 'BRP'.date('YmdHis'.rand(1,100)); ?>
 <form onsubmit="return loaderActivate()" method="post" action="/checkout">
       @csrf
       <input style="display:none" name="total_price" value="{{number_format($totalPrice[0]->totalPrice, 2, '.', '')}}">
-<button type="button" onclick="razorPayAmnt('{{number_format($totalPrice[0]->totalPrice, 2, '.', '')}}','{{date('YmdHis'.rand(1,100))}}')" class="btn btn-primary">Check Out</button>
-<!-- <button type="submit" class="btn btn-primary">Check Out</button> -->
+      <input style="display:none" name="bill_id_form" value="{{$billId}}">
+<button type="button" onclick="razorPayAmnt('{{number_format($totalPrice[0]->totalPrice, 2, '.', '')}}','{{$billId}}')" class="btn btn-primary">Check Out</button>
+<button style="display:none" id="submitForm" type="submit" class="btn btn-primary">Check Out</button>
 </form>
   </div>
   </div>
@@ -117,12 +122,15 @@ function loaderActivate(){
     return true;
 }
 //razor pay setup
+ var SITEURL = '{{URL::to('')}}';
 $.ajaxSetup({
            headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            }
          }); 
 function razorPayAmnt(amnt,id) {
+  document.getElementById("loaderBg").style.display = "block";
+
   var totalAmount = amnt;
            var bill_id =  id;
            var options = {
@@ -133,7 +141,7 @@ function razorPayAmnt(amnt,id) {
            "image": "{{ URL::to('/images/p_letter.jpg') }}",
            "handler": function (response){
                  $.ajax({
-                   url: SITEURL + 'paysuccess',
+                   url: SITEURL + '/paysuccess',
                    type: 'post',
                    dataType: 'json',
                    data: {
@@ -141,14 +149,17 @@ function razorPayAmnt(amnt,id) {
                      totalAmount : totalAmount ,product_id : bill_id,
                    }, 
                    success: function (msg) {
-          
-                       window.location.href = SITEURL + 'razor-thank-you';
+                      console.log('paymnt succesfull');
+  document.getElementById("loaderBg").style.display = "none";
+  document.getElementById("submitForm").click(); // Click on the checkbox
+
+                      // window.location.href = SITEURL + '/razor-thank-you';
                    }
                });
              
            },
           "prefill": {
-               "contact": '9988665544',
+               "contact": '8008319394',
                "email":   'devfeedly21@gmail.com',
            },
            "theme": {

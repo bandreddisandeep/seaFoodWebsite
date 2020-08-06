@@ -1,4 +1,4 @@
-@include('User.header')
+@include('User.header',['productnames' => $productnames])
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>

@@ -25,8 +25,8 @@ class singleItemController extends Controller
         $selectedItem = products::where('prod_id', '=',$prod_id)->get();
         //updating views of particula ritem
         $update = products::where('prod_id','=',$prod_id)->update(array('views'=>$selectedItem[0]['views']+1));
-
-        return view('User.singleItem',compact(['ItemCategoryTrending','products','category','selectedItem']));
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.singleItem',compact(['ItemCategoryTrending','products','category','selectedItem','productnames']));
     }
 
     public function addToCart(Request $request,$prod_id){
@@ -56,6 +56,7 @@ class singleItemController extends Controller
 
     public function updateItem($prod_id){
         $selectedItem = products::where('prod_id', '=',$prod_id)->get();
-        return view('User.adminUpdate',compact(['selectedItem']));
+        $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
+        return view('User.adminUpdate',compact(['selectedItem','productnames']));
     }
 }

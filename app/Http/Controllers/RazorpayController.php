@@ -9,11 +9,12 @@
  {
  return view('payments.razorpay');
  }
- public function razorPaySuccess(Request $Request){
+ public function razorPaySuccess(Request $request){
  $data = [
            'user_id' => '1',
-           'payment_id' => $request->payment_id,
-           'amount' => $request->amount,
+           'payment_id' => $request->razorpay_payment_id,
+           'amount' => $request->totalAmount,
+           'bill_id' => $request->product_id,
         ];
  $getId = Payment::insertGetId($data);  
  $arr = array('msg' => 'Payment successfully credited', 'status' => true);
