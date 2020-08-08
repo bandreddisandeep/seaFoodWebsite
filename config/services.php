@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN','sandbox8c8d3b96379a42b2bd193d86de1045f6.mailgun.org'),
-        'secret' => env('MAILGUN_SECRET','4fc222584bab89c52d2d137ece77f123-f7d0b107-4c9db4ef'),
+        'domain' => env('MAILGUN_DOMAIN','sandbox8c8d3b96379a42b2bd193d86de1sdsd045f6.mailgun.org'),
+        'secret' => env('MAILGUN_SECRET','4fc222584bab89c52d2d137ece77f123-f7d0b107-4c9db4ef-sdsd'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
