@@ -15,32 +15,38 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Product Type<span class="required-symbol">*</span></label>
-      <input required name="productType" list="categories" type="text" class="form-control" id="inputPassword4" placeholder="Product Type">
-      <datalist id="categories" >
-    <option value="SeaFood">
-    <option value="Species">
-</datalist>
+       <select required class="form-control" name="productType" id="exampleFormControlSelect1">
+      <option value="SeaFood">SeaFood</option>
+      <option value="Species">Species</option>
+    </select>
+      
 </div>
   </div>
   
   <div class="form-row">
   <div class="form-group col-md-6">
       <label for="inputPassword4">Product Price<span class="required-symbol">*</span></label>
-      <input required name="productPrice" type="number" class="form-control" id="inputPassword4" placeholder="Product Price">
+      <input required name="productPrice" type="number" step="0.01" class="form-control" id="inputPassword4" placeholder="Product Price">
     </div>
     <div class="form-group col-md-6">
       <label for="inputEmail3">Offer Price<span class="required-symbol">*</span></label>
-      <input required name="offerPrice" type="number" class="form-control" id="inputEmail3" placeholder="Offer Price">
+      <input required name="offerPrice" type="number" step="0.01" class="form-control" id="inputEmail3" placeholder="Offer Price">
     </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-6">
       <label for="inputPassword3">Quantity type<span class="required-symbol">*</span></label>
-      <input required name="QuantityType" type="text" class="form-control" id="inputPassword3" placeholder="Quantity">
+      <select required class="form-control" name="QuantityType" id="exampleFormControlSelect1">
+      <option value="Kgs">Kgs</option>
+      <option value="Gms">Gms</option>
+      <option value="Packets">Packets</option>
+      <option value="Boottles">Boottles</option>
+    </select>
+    
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword3">Total Quantity<span class="required-symbol">*</span></label>
-      <input required name="totalQuantity" type="text" class="form-control" id="inputPassword3" placeholder="Quantity">
+      <input required name="totalQuantity" type="number" class="form-control" id="inputPassword3" placeholder="Quantity">
     </div>
   </div>
   <div class="form-row">

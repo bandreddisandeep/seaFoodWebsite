@@ -22,7 +22,7 @@ class ordersController extends Controller
         $species = products::where('category', '=','Species')->orderBy('prod_id', 'DESC')->take(12)->get();
         $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
         $bills = bills::where('email_id','=',session()->get('gmailLoggedIn'))->join('orders','bills.Bill_id','=','orders.Bill_id')->join('products','orders.prod_id','=','products.prod_id')->get();
-        $individualBills = bills::where('email_id','=',session()->get('gmailLoggedIn'))->get();
+        $individualBills = bills::where('email_id','=',session()->get('gmailLoggedIn'))->orderBy('id','DESC')->get();
         $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
         return view('User.orderItems',compact(['bills','individualBills','species','seafood','productnames']));
     }
@@ -35,7 +35,7 @@ class ordersController extends Controller
         $species = products::where('category', '=','Species')->orderBy('prod_id', 'DESC')->take(12)->get();
         $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
         $bills = bills::join('orders','bills.Bill_id','=','orders.Bill_id')->join('products','orders.prod_id','=','products.prod_id')->get();
-        $individualBills = bills::get();
+        $individualBills = bills::orderBy('id','DESC')->get();
         $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
         return view('User.orderItems',compact(['bills','individualBills','species','seafood','productnames']));
     }
@@ -61,6 +61,7 @@ class ordersController extends Controller
         $notifications = 0;
         session(['noofNotifications' => $notifications]);
         Mail::to(session()->get('gmailLoggedIn'))->queue(new OrderPlaced($BillIDGenerated));
+        Mail::to('bandreddisandeep@gmail.com')->queue(new OrderPlaced($BillIDGenerated));
         return Redirect::to('/');
     }
     public function updateStatus(Request $request){

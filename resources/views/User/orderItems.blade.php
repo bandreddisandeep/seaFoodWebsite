@@ -13,7 +13,7 @@
 <span onclick="slideToggleFun('{{$individualBill->Bill_id}}')">
 <div id="block" class="row">
 <div class="col-5">
-  <img class="block-image" height="100%" width="80%" src="{{ URL::to('/images/p_letter.jpg') }}" alt="Card image cap">
+  <img class="block-image" height="100%" width="80%" src="{{ URL::to('public/images/p_letter.jpg') }}" alt="Card image cap">
 </div>
 <div id="textDescript" class="col-7">
 <div class="form-row">
@@ -24,14 +24,14 @@
     <button class="btn btn-dark btn-sm">View Bill</button>
   </div>
   <div class="form-group col-md-3">
-  <h5 class="card-title">Rs.{{$individualBill->Bill_price}}</h5>
+  <h5 class="card-title">Rs.{{round($individualBill->Bill_price,2)}}</h5>
 </div>
 </div>
 </div>
 </div>
 </span>
 <div id="{{$individualBill->Bill_id}}" class="individualBill">
-<table style="width:100%">
+<table id="{{$individualBill->Bill_id.'table'}}" style="width:100%">
   <tr>
     <th>Product</th>
     <th>Qty</th>
@@ -45,9 +45,9 @@
 <tr>
     <td>{{$bill->product_name}}</td>
     <td>{{$bill->sel_quantity}}</td>
-    <td>{{$bill->product_price}}</td>
-    <td>{{$bill->offer_price}}</td>
-    <td>{{$bill->offer_price*$bill->sel_quantity}}</td>
+    <td>{{round($bill->product_price,2)}}</td>
+    <td>{{round($bill->offer_price,2)}}</td>
+    <td>{{round($bill->offer_price*$bill->sel_quantity,2)}}</td>
 </tr>
 @endif
 @endforeach
@@ -56,6 +56,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="updateStatus('{{$individualBill->Bill_id}}','{{$individualBill->Bill_status}}')">Edit Status</button>
 @endif
 </h4>
+<button style="float:right;margin:10px" class="btn btn-Danger" onclick="exportTable('{{$individualBill->Bill_id}}')">Download Bill</button>
 </table>
 </div>
 <!---Modal-->
@@ -114,6 +115,10 @@
   
 @include('User.footer')
 </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+   
 <script>
     function loaderActivate(){
     document.getElementById("loaderBg").style.display = "block";
@@ -121,6 +126,7 @@
 }
  $(".individualBill").slideUp(1);
 function slideToggleFun(x){
+     $(".individualBill").slideUp(1);
     let idTag = '#'+x;
      $(idTag).slideToggle();
 }
@@ -128,6 +134,24 @@ function updateStatus(billId,billStatus){
   document.getElementById("recipient-name").value = billId;
   document.getElementById("message-text").value = billStatus;
 }
+//export excel
+
+    function exportTable(billTable){   
+        let getTable = '#'+billTable+'table';
+         let getTableFile = billTable+'.pdf';
+         html2canvas($(getTable)[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download(getTableFile);
+                }
+            });
+    }
 </script>
 </html>
 

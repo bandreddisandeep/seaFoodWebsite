@@ -8,9 +8,9 @@ foreach($products as $product){
 ?>
 <a id="a" href=<?php echo "/singleItem/SeaFood/".$product->prod_id ?>>
 <div class="card" id="card-style">
-  <img class="card-img-top" height="100" width="100" src='/images/<?php echo $product->product_pic1; ?>' alt="Card image cap">
+  <img class="card-img-top" height="100" width="100" src='/public/images/<?php echo $product->product_pic1; ?>' alt="Card image cap">
   <div id="b" class="card-body">
-    <p class="card-title"><?php echo $product->product_name; ?><br>Rs.<?php echo $product->offer_price; ?></p>
+    <p class="card-title"><?php echo $product->product_name; ?><br>Rs.<?php echo round($product->offer_price,2); ?></p>
   </div>
 </div>
 </a>

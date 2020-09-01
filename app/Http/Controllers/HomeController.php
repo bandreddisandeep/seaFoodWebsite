@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPlaced;
 
-
 class HomeController extends Controller
 {
      /**
@@ -33,6 +32,8 @@ class HomeController extends Controller
         $currentLink = request()->path();
         session(['googleLoginBeforeLink' => $currentLink]);
 
+        $data = array('name'=>"Virat Gandhi");
+   
         $species = products::where('category', '=','Species')->orderBy('prod_id', 'DESC')->take(12)->get();
         $products = products::where('category', '=','Species')->orderBy('views', 'ASC')->take(5)->get();
         $productnames = products::select('product_name')->orderBy('views', 'DESC')->get();
@@ -73,9 +74,7 @@ class HomeController extends Controller
 
     public function searchItem(Request $request){
         //storing link
-        $currentLink = request()->path();
-        session(['googleLoginBeforeLink' => $currentLink]);
-        
+      
         $species = products::where('category', '=','Species')->orderBy('prod_id', 'DESC')->take(12)->get();
         $seafood = products::where('category', '=','SeaFood')->orderBy('prod_id', 'DESC')->take(12)->get();
         $products = products::where('product_name','like', '%' . request('searchElement') . '%')->take(12)->get();

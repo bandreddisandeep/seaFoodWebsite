@@ -12,7 +12,7 @@
 <a id="a" href="/singleItem/{{$product->category}}/{{$product->prod_id}}">
 <div id="block" class="row">
 <div class="col-5">
-  <img class="block-image" height="100%" width="80%" src="/images/{{ $product->product_pic1 }}" alt="Card image cap">
+  <img class="block-image" height="100%" width="80%" src="public/images/{{ $product->product_pic1 }}" alt="Card image cap">
 </div>
 <div id="textDescript" class="col-7">
 <div class="form-row">
@@ -21,7 +21,7 @@
     <p id="secondary" class="card-text">{{$product->description}}</p>
   </div>
   <div class="form-group col-md-3">
-  <h5 class="card-title"><span class="strikeAmount">Rs. {{$product->product_price}}</span> Rs.{{$product->offer_price}}/{{$product->type}}</h5>
+  <h5 class="card-title"><span class="strikeAmount">Rs. {{round($product->product_price,2)}}</span> Rs.{{round($product->offer_price,2)}}/{{$product->type}}</h5>
   <p id="secondary" class="card-text">{{$product->views}} Views</p>
 </div>
 </div>

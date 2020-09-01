@@ -20,18 +20,20 @@
   @csrf
     <div class="input-group">
 
-  <input type="text" class="form-control" name="searchElement" list="searchElements" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" name="searchElement" list="searchElements" placeholder="product name" aria-label="product name" aria-describedby="basic-addon2">
   <datalist id="searchElements" >
   @foreach($productnames as $productname)
     <option value="{{$productname->product_name}}">
   @endforeach
     
 </datalist>
-<button type="submit">
   <div class="input-group-append">
-    <span class="input-group-text" id="basic-addon2"><ion-icon size="large" name="search-outline"></ion-icon></span>
+      
+
+    <span class="input-group-text" id="basic-addon2"><button style="padding:none;border:none" type="submit"><ion-icon size="large" name="search-outline"></ion-icon> </button></span>
+     
+
   </div>
-  </button>
 </div>
     </form>
     <div class="customized">

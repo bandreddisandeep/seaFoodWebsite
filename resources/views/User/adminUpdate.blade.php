@@ -28,11 +28,11 @@
   <div class="form-row">
   <div class="form-group col-md-6">
       <label for="inputPassword4">Product Price<span class="required-symbol">*</span></label>
-      <input required name="productPrice" type="number" class="form-control" id="inputPassword4" placeholder="Product Price" value="{{$selectedItem[0]->product_price}}">
+      <input required name="productPrice" type="number" step="0.01" class="form-control" id="inputPassword4" placeholder="Product Price" value="{{$selectedItem[0]->product_price}}">
     </div>
     <div class="form-group col-md-6">
       <label for="inputEmail3">Offer Price<span class="required-symbol">*</span></label>
-      <input required name="offerPrice" type="number" class="form-control" id="inputEmail3" placeholder="Offer Price" value="{{$selectedItem[0]->offer_price}}">
+      <input required name="offerPrice" type="number" step="0.01" class="form-control" id="inputEmail3" placeholder="Offer Price" value="{{$selectedItem[0]->offer_price}}">
     </div>
   </div>
   <div class="form-row">
@@ -48,14 +48,14 @@
   <div class="form-row">
     <div class="form-group col-md-6">
     @if($selectedItem[0]->product_pic1)
-    <img height="200" width="100%" src="/images/{{ $selectedItem[0]->product_pic1}}" alt="First slide">
+    <img height="200" width="100%" src="/public/images/{{ $selectedItem[0]->product_pic1}}" alt="First slide">
      @endif
      <label for="inputCity">Change Pic 1<span class="required-symbol">*</span></label>
       <input name="picOne" type="file" class="form-control" id="inputCity">
     </div>
     <div class="form-group col-md-6">
     @if($selectedItem[0]->product_pic2)
-    <img height="200" width="100%" src="/images/{{ $selectedItem[0]->product_pic2}}" alt="First slide">
+    <img height="200" width="100%" src="/public/images/{{ $selectedItem[0]->product_pic2}}" alt="First slide">
      @endif
      <label for="inputCity">Pic 2</label>
       <input type="file" name="picTwo" class="form-control" id="inputCity">
@@ -64,7 +64,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
     @if($selectedItem[0]->product_pic3)
-    <img height="200" width="100%" src="/images/{{ $selectedItem[0]->product_pic3}}" alt="First slide">
+    <img height="200" width="100%" src="/public/images/{{ $selectedItem[0]->product_pic3}}" alt="First slide">
      @endif
       <label for="inputCity">Pic 3</label>
       <input type="file" name="picThree" class="form-control" id="inputCity">

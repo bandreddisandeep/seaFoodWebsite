@@ -15,7 +15,7 @@
 @foreach($cartItems as $cartItem)
 <div id="block" class="row">
 <div class="col-5">
-  <img class="block-image" height="100%" width="80%" src="{{ URL::to('/images/' . $cartItem->product_pic1) }}" alt="Card image cap">
+  <img class="block-image" height="100%" width="80%" src="{{ URL::to('public/images/' . $cartItem->product_pic1) }}" alt="Card image cap">
 </div>
 <div id="textDescript" class="col-7">
 <div class="form-row">
@@ -134,7 +134,7 @@ function razorPayAmnt(amnt,id) {
   var totalAmount = amnt;
            var bill_id =  id;
            var options = {
-           "key": "rzp_test_cz7JNpNK7k3gKX",
+           "key": "rzp_live_4jqmBneKgT8rno",
            "amount": (totalAmount*100), // 2000 paise = INR 20
            "name": "BRP Foods",
            "description": "Payment",
@@ -159,8 +159,8 @@ function razorPayAmnt(amnt,id) {
              
            },
           "prefill": {
-               "contact": '8008319394',
-               "email":   'devfeedly21@gmail.com',
+               "contact": '',
+               "email":   '',
            },
            "theme": {
                "color": "#528FF0"
